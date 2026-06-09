@@ -1,0 +1,97 @@
+id: skill-invoice-receipt-match
+code: invoice_receipt_match
+name: 发票收款匹配 Skill
+description: 对每一张发票，在收款流水中查找最佳匹配，输出匹配结果与差异详情
+type: ability
+version: 1
+status: published
+
+creator: 鲜肉
+created_at: "2026-06-03"
+
+input:
+  发票列表:
+    type: array
+    items:
+      客户ID: { type: string }
+      发票号: { type: string }
+      金额: { type: number }
+      日期: { type: string, format: date }
+      来源系统: { type: string, enum: [SAP, DMS] }
+  收款流水列表:
+    type: array
+    items:
+      来源账号: { type: string }
+      付款方: { type: string }
+      金额: { type: number }
+      交易日期: { type: string, format: date }
+      摘要: { type: string }
+
+output:
+  匹配结果列表:
+    type: array
+    items:
+      发票号: { type: string }
+      匹配流水号: { type: string }
+      匹配状态: { type: string, enum: [完全匹配, 部分匹配, 未匹配] }
+      差异详情:
+        差异类型: { type: string, enum: [金额差异, 客户不匹配, 日期超窗, 无差异] }
+        差异值: { type: number }
+        差异描述: { type: string }
+  统计:
+    总发票数: { type: integer }
+    完全匹配数: { type: integer }
+    部分匹配数: { type: integer }
+    未匹配数: { type: integer }
+
+config:
+  金额容忍阈值:
+    type: number
+    default: 0.05
+    description: 5%以内的差异不算差异
+  日期窗口天数:
+    type: integer
+    default: 3
+    description: 前后3天内的交易视同匹配
+  匹配优先级:
+    type: array
+    default: [客户ID, 金额, 日期]
+    description: 先按客户匹配，再比对金额和日期
+
+dependencies:
+  数据源: [SAP发票表(只读), 银企直联流水表(只读)]
+  模型: 无需大模型(纯规则引擎)
+  工具: [fuzzy_match]
+  知识库: []
+  权限要求: { 数据访问: 对账场景只读权限, 敏感操作: 无 }
+
+tests:
+  - name: 完全匹配
+    input:
+      发票列表:
+        - { 客户ID: "C001", 发票号: "INV-2024-001", 金额: 500000, 日期: "2024-05-01", 来源系统: "SAP" }
+      收款流水列表:
+        - { 来源账号: "ACC-001", 付款方: "C001", 金额: 500000, 交易日期: "2024-05-01", 摘要: "货款" }
+    expected:
+      匹配结果列表:
+        - { 发票号: "INV-2024-001", 匹配状态: "完全匹配" }
+
+  - name: 金额差异
+    input:
+      发票列表:
+        - { 客户ID: "C002", 发票号: "INV-2024-002", 金额: 500000, 日期: "2024-05-10", 来源系统: "SAP" }
+      收款流水列表:
+        - { 来源账号: "ACC-002", 付款方: "C002", 金额: 480000, 交易日期: "2024-05-11", 摘要: "货款" }
+    expected:
+      匹配结果列表:
+        - { 发票号: "INV-2024-002", 匹配状态: "部分匹配" }
+
+  - name: 未匹配
+    input:
+      发票列表:
+        - { 客户ID: "C003", 发票号: "INV-2024-003", 金额: 100000, 日期: "2024-05-15", 来源系统: "SAP" }
+      收款流水列表:
+        - { 来源账号: "ACC-099", 付款方: "C099", 金额: 200000, 交易日期: "2024-06-01", 摘要: "其他" }
+    expected:
+      匹配结果列表:
+        - { 发票号: "INV-2024-003", 匹配状态: "未匹配" }

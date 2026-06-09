@@ -1,0 +1,33 @@
+id: skill-field-mapping
+code: field_mapping
+name: 字段映射 Skill
+description: 按字段映射配置翻译字段名称，丰富记录属性，按聚合规则汇总，输出映射报告与标准化后的记录
+type: ability
+version: 1
+status: published
+category: 收入核对
+
+creator: system
+created_at: "2026-06-01"
+
+input:
+  business_records: { type: array, description: "业务侧原始记录" }
+  finance_records: { type: array, description: "财务侧原始记录" }
+  business_profile: { type: string }
+  finance_profile: { type: string }
+
+output:
+  match_pairs: { type: array, description: "配对结果列表" }
+  unmatched_business: { type: array }
+  unmatched_finance: { type: array }
+  business_count: { type: integer }
+  finance_count: { type: integer }
+
+config: {}
+
+dependencies:
+  数据源: []
+  模型: 无需大模型
+  工具: [mapping_engine, MappingRegistry]
+  知识库: []
+  权限要求: { 数据访问: 无, 敏感操作: 无 }

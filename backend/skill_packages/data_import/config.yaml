@@ -1,0 +1,14 @@
+max_file_size_mb: 50
+allow_empty_amount: false
+dedup_keys:
+  - customer_id
+  - doc_no
+  - amount
+  - date
+supported_formats:
+  - xlsx
+  - xls
+  - csv
+default_profiles:
+  business: sap
+  finance: dms

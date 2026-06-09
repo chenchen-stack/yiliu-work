@@ -1,0 +1,42 @@
+amount_mismatch:
+  enabled: true
+  version: "1.0"
+  confidence: 0.95
+  responsible_party: finance
+  description: 相同业务键下业务侧与财务侧金额不一致
+
+duplicate_record:
+  enabled: true
+  version: "1.0"
+  confidence: 1.0
+  responsible_party: finance
+  description: 相同业务唯一键出现重复记录
+
+mapping_anomaly:
+  enabled: true
+  version: "1.0"
+  confidence: 0.85
+  responsible_party: mdm_team
+  description: 主数据映射或产品编码不一致
+
+# legacy aliases
+duplicate_amount:
+  enabled: true
+  version: "1.0"
+  confidence: 1.0
+  responsible_party: finance
+  description: legacy
+
+mdm_anomaly:
+  enabled: true
+  version: "1.0"
+  confidence: 0.9
+  responsible_party: mdm_team
+  description: legacy
+
+encoding_mismatch:
+  enabled: true
+  version: "1.0"
+  confidence: 0.7
+  responsible_party: sales
+  description: legacy

@@ -1,0 +1,151 @@
+# 收入核对中心 · 数据源与本体映射（管理后台展示 + 场景说明）
+scenario_title: 发票-收款对账（方太 SAP × 银企直联）
+scenario_summary: >
+  原始数据来自不同系统、互不认识；经字段翻译→对象识别→关系建立→规则判定四步，
+  映射到统一财资本体后再做匹配。每接一个新系统，只在字段翻译层增加对照表，本体模型不变。
+
+mvp_note: >
+  映射引擎已接入 Workflow：保存字段对照后，任务执行会在 field_mapping 节点完成翻译与 MDM/模糊匹配；
+  演示集 dataset_full（订单口径）与 dataset_revenue（发票-收款口径）均可新建任务验证。
+
+data_sources:
+  - id: sap_fi
+    name: SAP FI
+    system_type: ERP
+    connector: API / IDoc
+    status: configured
+    role: 业务侧（应收发票）
+  - id: bank_direct
+    name: 银企直联
+    system_type: 资金
+    connector: 银行前置机 / 开放银行
+    status: configured
+    role: 财务侧（收款流水）
+  - id: demo_files
+    name: 演示数据集
+    system_type: 文件
+    connector: CSV 上传
+    status: active
+    role: MVP 任务导入（business_side / finance_side）
+
+raw_examples:
+  - side: sap_invoice
+    title: SAP 发票记录
+    fields:
+      - { label: 系统, value: SAP FI }
+      - { label: BUKRS, value: "1000" }
+      - { label: KUNNR, value: C0012345 }
+      - { label: BELNR, value: "19000001" }
+      - { label: DMBTR, value: "500,000" }
+      - { label: WAERK, value: CNY }
+      - { label: BLDAT, value: "20260601" }
+      - { label: 状态, value: 未收款 }
+  - side: bank_flow
+    title: 银企直联流水
+    fields:
+      - { label: 系统, value: 银企直联 }
+      - { label: 账号, value: "6222..." }
+      - { label: 交易时间, value: "20260601" }
+      - { label: 金额, value: "500,000.00" }
+      - { label: 方向, value: 贷方(收入) }
+      - { label: 摘要, value: "方太厨具 货款" }
+      - { label: 交易号, value: B2026... }
+
+pipeline_steps:
+  - step: 1
+    key: field_translate
+    title: 字段翻译
+    subtitle: 系统字段 → 统一字段模型
+    description: 把各系统列名翻译为财资本体统一字段；新系统只增对照行，不改本体。
+  - step: 2
+    key: object_identify
+    title: 对象识别
+    subtitle: 这是什么财资对象？
+    description: 识别记录在本体中的类型，决定后续可建立的关系与可用规则。
+  - step: 3
+    key: relation_link
+    title: 关系建立
+    subtitle: 对象之间如何关联？
+    description: 定义匹配路径与依据字段，形成可对账的关联图。
+  - step: 4
+    key: rule_judge
+    title: 规则判定
+    subtitle: 对上了吗？有差异怎么办？
+    description: 执行匹配规则；无差异自动核销，有差异触发规则与 AI/人工流程。
+
+field_mappings:
+  - unified_field: customer_id
+    unified_label: 客户ID
+    sap_field: KUNNR
+    bank_field: 摘要中的客户名称（模糊匹配）
+    transform: MDM / 客户主数据
+  - unified_field: amount
+    unified_label: 金额
+    sap_field: DMBTR
+    bank_field: 金额
+    transform: 数值归一，同币种
+  - unified_field: currency
+    unified_label: 币种
+    sap_field: WAERK
+    bank_field: 币种（默认 CNY）
+    transform: 缺省填充
+  - unified_field: business_date
+    unified_label: 业务日期
+    sap_field: BLDAT
+    bank_field: 交易时间
+    transform: 日期窗口对齐
+  - unified_field: source_doc_no
+    unified_label: 来源单号
+    sap_field: BELNR
+    bank_field: 交易号
+    transform: 追溯键
+  - unified_field: settlement_status
+    unified_label: 处理状态
+    sap_field: 未收款
+    bank_field: 贷方
+    transform: 侧别语义映射
+  - unified_field: source_system
+    unified_label: 来源系统
+    sap_field: SAP FI
+    bank_field: 银企直联
+    transform: 常量
+
+object_types:
+  - source: sap_fi
+    ontology_object: 应收发票
+    identifier_fields: [BELNR, KUNNR, BLDAT]
+  - source: bank_direct
+    ontology_object: 收款流水
+    identifier_fields: [交易号, 账号, 交易时间]
+
+relationships:
+  - from_object: 应收发票
+    to_object: 收款流水
+    relation_type: 发票-收款匹配
+    match_keys: [customer_id, amount, business_date]
+    tolerance: "金额 ± 容差阈值；日期在配置窗口内"
+
+match_rules:
+  - name: 回款匹配规则
+    checks:
+      - "客户ID：C0012345 ↔ 摘要「方太厨具」（模糊匹配）"
+      - "金额：500,000 ↔ 500,000（差异=0）"
+      - "日期：20260601 ↔ 20260601（同一天）"
+    result_ok: 自动匹配，不存在差异
+  - name: 金额差异规则（示例）
+    checks:
+      - "发票 500,000 ↔ 流水 480,000 → 差异 -20,000"
+      - "触发 amount_mismatch；AI 可分析摘要含手续费等"
+    result_ok: 待人工确认的合理差异
+
+# 演示集简化对照（与 field_mapping.yaml 对齐，供任务执行）
+demo_field_mappings:
+  - unified_field: customer_id
+    sap_field: CUSTOMER
+    finance_field: client_id
+  - unified_field: order_id
+    sap_field: VBELN
+    finance_field: order_num
+  - unified_field: sales_amount
+    sap_field: NETWR
+    finance_field: net_amount

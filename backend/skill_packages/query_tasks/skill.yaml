@@ -1,0 +1,42 @@
+id: skill-query-tasks
+code: query_tasks
+name: 任务查询 Skill
+description: 查询当前用户的收入核对任务列表，返回最近任务的状态、进度与待复核条数（对话 Skill，非 Workflow 节点）
+type: ability
+version: 1
+status: published
+category: 对话辅助
+
+creator: system
+created_at: "2026-06-03"
+
+input:
+  user_id:
+    type: string
+    description: 用户ID，为空则返回最近任务（按更新时间倒序）
+  limit:
+    type: integer
+    description: 返回条数，默认 10
+  status_filter:
+    type: string
+    description: 可选，按任务状态过滤（如 running、review）
+
+output:
+  total: { type: integer }
+  tasks:
+    type: array
+    items:
+      id: { type: string }
+      name: { type: string }
+      status: { type: string }
+      progress: { type: integer }
+      period: { type: string }
+
+config: {}
+
+dependencies:
+  数据源: [Task表(只读)]
+  模型: 无需大模型
+  工具: []
+  知识库: []
+  权限要求: { 数据访问: 任务列表只读, 敏感操作: 无 }

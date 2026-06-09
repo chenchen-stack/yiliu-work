@@ -1,0 +1,30 @@
+id: skill-review_flow
+code: review_flow
+name: 复核流转 Skill
+description: 财务人工确认 / 退回 / 指派，记录复核结果并更新任务状态
+type: process
+version: 1
+status: published
+category: 收入核对
+
+creator: system
+created_at: "2026-06-01"
+
+input:
+  task_id: { type: string, description: "对账任务 ID" }
+  reviewer_id: { type: string, description: "复核人用户 ID" }
+
+output:
+  pending_count: { type: integer }
+  confirmed_count: { type: integer }
+  returned_count: { type: integer }
+  task_status: { type: string }
+
+config: {}
+
+dependencies:
+  数据源: [differences表, tasks表]
+  模型: 无需大模型
+  工具: [review_flow_service]
+  知识库: []
+  权限要求: { 数据访问: 复核读写, 敏感操作: 确认/退回 }

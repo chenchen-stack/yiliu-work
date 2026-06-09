@@ -1,0 +1,21 @@
+rule_set: fangtai_revenue_default
+amount_tolerance_pct: 0.0
+amount_absolute_tolerance: 0.01
+duplicate_key_fields:
+  - customer_id
+  - doc_no
+  - amount
+min_severity_to_ai: medium
+rules:
+  - name: amount_mismatch
+    type: tolerance
+    left_field: sap.amount
+    right_field: dms.amount
+    on_fail: mark_diff
+  - name: duplicate_record
+    type: duplicate
+    side: both
+    on_fail: mark_diff
+  - name: mapping_anomaly
+    type: mdm
+    on_fail: mark_diff

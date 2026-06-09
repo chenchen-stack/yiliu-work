@@ -1,0 +1,16 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="50" cy="50" r="50" fill="#E0F2FE"/>
+  <circle cx="50" cy="56" r="28" fill="#C68642"/>
+  <circle cx="50" cy="56" r="26" fill="#FDDCB5"/>
+  <path d="M26,38 C28,16 72,16 74,38 L74,42 Q70,30 50,28 Q30,30 26,42Z" fill="#1A1A2E"/>
+  <path d="M30,38 Q32,32 40,30" stroke="#1A1A2E" stroke-width="6" fill="none" stroke-linecap="round"/>
+  <path d="M70,38 Q68,32 60,30" stroke="#1A1A2E" stroke-width="6" fill="none" stroke-linecap="round"/>
+  <rect x="30" y="48" width="16" height="12" rx="6" fill="none" stroke="#6B7280" stroke-width="1.8"/>
+  <rect x="54" y="48" width="16" height="12" rx="6" fill="none" stroke="#6B7280" stroke-width="1.8"/>
+  <line x1="46" y1="54" x2="54" y2="54" stroke="#6B7280" stroke-width="1.5"/>
+  <ellipse cx="38" cy="54" rx="2" ry="2.5" fill="#2D2117"/>
+  <ellipse cx="62" cy="54" rx="2" ry="2.5" fill="#2D2117"/>
+  <circle cx="39" cy="53" r="0.8" fill="#FFF"/>
+  <circle cx="63" cy="53" r="0.8" fill="#FFF"/>
+  <path d="M46,66 Q50,69 54,66" stroke="#D4845A" fill="none" stroke-width="1.8" stroke-linecap="round"/>
+</svg>

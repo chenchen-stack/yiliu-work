@@ -1,0 +1,64 @@
+standard_fields:
+  customer_id:
+    sap_field: CUSTOMER
+    dms_field: client_id
+    fanruan_field: customer_code
+    data_type: VARCHAR
+  order_id:
+    sap_field: VBELN
+    dms_field: order_num
+    fanruan_field: sales_order
+    data_type: VARCHAR
+  order_date:
+    sap_field: ERDAT
+    dms_field: create_date
+    fanruan_field: order_date
+    data_type: DATE
+  sales_amount:
+    sap_field: NETWR
+    dms_field: net_amount
+    fanruan_field: amount
+    data_type: DECIMAL
+  product_code:
+    sap_field: MATNR
+    dms_field: sku
+    fanruan_field: product
+    data_type: VARCHAR
+  invoice_num:
+    sap_field: INVOICE
+    dms_field: invoice_no
+    fanruan_field: invoice_id
+    data_type: VARCHAR
+
+mdm:
+  - mdm_id: C0012345
+    sap_code: C0012345
+    dms_code: C0012345
+    fanruan_code: C0012345
+    customer_name: 方太厨具
+  # 方太 POC 真实客户（来自 Excel）
+  - mdm_id: FT-HQ
+    sap_code: "10021053"
+    dms_code: "10021053"
+    fanruan_code: FT001
+    customer_name: 方太厨具（总部）
+  - mdm_id: FT-EAST
+    sap_code: "10021045"
+    dms_code: "10021045"
+    fanruan_code: FT002
+    customer_name: 方太厨具（华东分公司）
+  - mdm_id: FT-SOUTH
+    sap_code: "10021062"
+    dms_code: "10021062"
+    fanruan_code: FT003
+    customer_name: 方太厨具（华南分公司）
+  - mdm_id: FT-WEST
+    sap_code: "10003584"
+    dms_code: "10003584"
+    fanruan_code: FT004
+    customer_name: 方太厨具（西南分公司）
+  - mdm_id: FT-NORTH
+    sap_code: "10023391"
+    dms_code: "10023391"
+    fanruan_code: FT005
+    customer_name: 方太厨具（北方分公司）

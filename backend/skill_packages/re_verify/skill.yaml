@@ -1,0 +1,31 @@
+id: skill-re_verify
+code: re_verify
+name: 再次验证 Skill
+description: 修正数据后重跑规则，验证差异是否闭环
+type: ability
+version: 1
+status: published
+category: 收入核对
+
+creator: system
+created_at: "2026-06-01"
+
+input:
+  task_id: { type: string }
+  diff_id: { type: string, description: "可选，单条验证" }
+  corrected_dataset_path: { type: string }
+
+output:
+  resolved: { type: boolean }
+  remaining_diffs: { type: integer }
+  retry_round: { type: integer }
+  verify_status: { type: string }
+
+config: {}
+
+dependencies:
+  数据源: [任务数据文件, differences表]
+  模型: 无需大模型
+  工具: [workflow_engine, difference_detector]
+  知识库: []
+  权限要求: { 数据访问: 任务读写, 敏感操作: 重跑核对 }

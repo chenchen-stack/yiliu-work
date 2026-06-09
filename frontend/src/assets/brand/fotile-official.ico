@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="moudle" content="Index" />
+    <title>方太官网 智慧厨房专家</title>
+    <meta name="fssName" content="index" />
+    <meta name="Keywords" content="方太,FOTILE,方太厨房电器,方太吸油烟机,方太烹饪机,方太烤箱,方太热水器"/>
+    <meta name="Description" content="方太作为智慧厨房专家，通过以人为本的创新基因，前沿实用的科技赋能，为顾客带来高效安全、舒适健康、美学治愈的整体厨房新体验。"/>
+    <script src="https://blog-static.cnblogs.com/files/gxsyj/browser.min.js" type="text/babel"></script>
+    <script src="/webstatic/newSrc/js/jquery.js"></script>
+    <link rel="shortcut icon" href="/webstatic/Public/favicon.ico" />
+    <link href="/webstatic/Public/Home/css/homePage2.css" rel="stylesheet" type="text/css" />
+    <link href="/webstatic/Public/Home/new/css/swiper-3.4.2.min.css" rel="stylesheet" type="text/css">
+    <link href="https://vjs.zencdn.net/7.8.2/video-js.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://g.alicdn.com/de/prismplayer/2.8.2/skins/default/aliplayer-min.css" />
+    <script charset="utf-8" type="text/javascript" src="https://g.alicdn.com/de/prismplayer/2.8.2/aliplayer-min.js"></script>
+    <script src="https://lib.baomitu.com/vue/2.5.17/vue.min.js"></script>
+    
+<script type="text/javascript" src="/webstatic/newSrc/js/jquery.js"></script>
+<script src="/webstatic/Public/Home/js/cookie.js"></script>
+<script src="/webstatic/newSrc/js/gio_url.js"></script>
+<script>
+
+
+
+    // fss埋码
+    let fssName =  document.getElementsByTagName('meta')['fssName'].content;
+    if(fssName){
+        var _map = _map || [];
+        _map.push(['_setPt', fssName]);
+        (function () {
+            var ma = document.createElement('script');
+            ma.type = 'text/javascript';
+            ma.async = true;
+            ma.src = '/webstatic/Public/Home/js/buried.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ma, s);
+        })();
+    }
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null)
+            //return unescape(r[2]);//会中文乱码
+            return decodeURI((r[2]));//解决了中文乱码
+        return null;
+    }
+    function generateRandom() {
+        return Math.random().toString(16).slice(2);
+    }
+
+    setTimeout(sendgioUser(),1000)
+    function sendgioUser(){
+        let userId= $.cookie('userId');
+        if(!userId){
+            let userId= generateRandom();
+            $.cookie('userId',userId);
+            let date = new Date();
+            let year = date.getFullYear();
+            let month = date.getMonth() + 1;
+            let day = date.getDate();
+
+            month = (month > 9) ? month : ("0" + month);
+            day = (day < 10) ? ("0" + day) : day;
+            let today = year + "-" + month + "-" + day;
+            gdp('setUserAttributes', {
+                visitId_vstr:userId?userId:'-',//访问用户ID
+                ifFirstVisit_vstr:true,//是否首次访问
+                ifHistoryRetainUser_vstr:false,//是否历史留资用户
+                firstRetainDate_vstr:today,//首次留资日期
+            });
+        }else{
+            gdp('setUserAttributes', {
+                visitId_vstr:userId?userId:'-',//访问用户ID
+                ifFirstVisit_vstr:false,//是否首次访问
+                ifHistoryRetainUser_vstr:true,//是否历史留资用户
+                firstRetainDate_vstr:'-',//首次留资日期
+            });
+        }
+        console.log(userId)
+    }
+
+</script>
+</head>
+<body>
+<script>
+    // 请在标签body之后加载
+    (function (w, d, n, a, j) {
+        w[n] = w[n] || function () {
+            (w[n].a = w[n].a || []).push(arguments)
+        };
+        j = d.createElement('script');
+        j.async = true;
+        j.src = 'https://qiyukf.com/script/c8f4a5cb93d7b53c07a3467875022e64.js?subdomain=1';
+        d.body.appendChild(j);
+    })(window, document, 'ysf');
+
+    // 设置用户身份
+    ysf('onready', function () {
+        ysf('config', {
+            wp:1,
+            robotShuntSwitch:1,
+            robotId:5286982,
+            groupid: '481839794'//客服组
+        })
+    })
+    // 以商品链接打开客服
+    function ysf_open_product(type) {
+        ysf('product', {
+            show: 1, // 1为打开， 其他参数为隐藏（包括非零元素）
+            title: '标题',
+            desc: '商品描述',
+            picture: 'https://hsimage.fotile.com/202201201404165821846.jpg',
+            note: `市场价：100           售价：10`,
+            url: 'https://hsadmin.fotile.com/backend/#/devops/issue/manage',
+            sendByUser: 1,
+            price: '100',
+            success: function () {     // 成功回调
+                ysf('open');
+            },
+            error: function () {       // 错误回调
+            }
+        })
+    }
+
+    // 直接打开客服
+    function ysf_open(type) {
+        //ysf('open');
+       
+        gdp('track', 'FT_customerServiceEntranceClick ', {
+            utmSource_var: getQueryString('utm_source')?getQueryString('utm_source'):'-',//广告来源
+            pageName_var: '-',//页面名称
+            pageUrl_var: window.location.href,//页面地址
+        });
+         window.open('/help/qiyukf.html')
+    }
+
+</script>
+<link href="/webstatic/common/pc/css/privacy.css" rel="stylesheet" type="text/css"/>
+<script src="/webstatic/Public/Home/js/encryption/md5.min.js" type="text/javascript"></script>
+<script src="/webstatic/Public/Home/js/encryption/jsencrypt.min.js" type="text/javascript"></script>
+<script src="/webstatic/Public/Home/js/encryption/index.js" type="text/javascript"></script>
+<script src="https://lib.baomitu.com/vue/2.5.17/vue.min.js"></script>
+
+<div class="popup-top" :class="showDialog?'show-dialog':''" >
+    <div class="popup-top-title">方太隐私声明</div>
+    <div class="popup-top-content" scroll-y>
+        <div class="hide-scrollbar" v-html="privacyContext"></div>
+        <div class="box"></div>
+    </div>
+    <div class="btn">
+        <div class="mask"></div>
+        <div class="agreement">
+            <div class="agreement-left" @click="setCheck">
+                <img :src="checked ? 'https://hsimage.fotile.com/202601131723598706531.png' : 'https://hsimage.fotile.com/202601071910230754635.png'" class="icon" >
+            </div>
+            <div class="agreement-right" 
+                >我同意我的个人信息将按照
+                <a class="txt" target="_blank" href="/account/privacy.html?type=123">《方太隐私协议》</a> 和
+                <a class="txt" target="_blank" href="/account/privacy.html?type=124">《第三方信息共享清单》</a
+                >所述的目的和方式向第三方提供</div
+            >
+            </div>
+            <div class="btnGroup">
+            <div class="footer_btn btn1" @click="disAgreed">不同意</div>
+            <div class="footer_btn btn2" @click="agreed">同意</div>
+        </div>
+    </div>
+</div>
+<script src="/webstatic/common/pc/js/privacy.js" type="text/javascript"></script>
+<script src="/webstatic/Public/Home/js/global.min.js" type="text/javascript"></script>
+
+
+<style></style>
+
+<link href="/webstatic/common/pc/css/PCheader_Fix.css" rel="stylesheet" type="text/css" />
+<script src="/webstatic/Public/Home/js/encryption/md5.min.js" type="text/javascript"></script>
+<script src="/webstatic/Public/Home/js/encryption/jsencrypt.min.js" type="text/javascript"></script>
+<script src="/webstatic/Public/Home/js/encryption/index.js" type="text/javascript"></script>
+<div id="headerWpper">
+    <!-- 搜索 S -->
+    <div class="dialog_search2017">
+        <div class="dsearch">
+            <div class="w945">
+                <div class="close"><img src="https://hsimage.fotile.com/202309121436114057795.png" alt=""></div>
+                    <!--<a href="javascript:;" class="btn">搜素</a>-->
+                    <input type="button" value="搜索" class="btn" onclick="search_Fn()">
+                    <input id="global-search" name="keyword" type="text" placeholder="|" autocomplete="off" class="input" onfocus="onInputFocus()" onblur="onInputBlur()" oninput="fuzzysearchPc(event,this)">
+            </div>
+            <div class="w_945">
+                <div class="search-parent">
+                    <div class="search_box">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="defaultBox">
+            <div class="hotConbox">
+                <div class="dsBox">
+                    <div class="w945">
+                        <h4>热门搜索</h4>
+                    </div>
+                </div>
+                <ul class="w945 hot">
+                </ul>
+            </div>
+            <div class="selectConbox">
+                <div class="dsBox">
+                    <div class="w945">
+                        <h4>精选产品</h4>
+                    </div>
+                </div>
+                <ul class="w945 selected">
+                </ul>
+            </div>
+
+        </div>
+        <div class="searchContent">
+            <div class="myCenterBox">
+                <div class="tabs">
+                    <span name="searchtype" value="goods" class="on">产品</span>
+                    <span name="searchtype" value="guide">资讯</span>
+                    <span name="searchtype" value="fotileimage">方太影像</span>
+                </div>
+                <div class="count">共<i></i>个结果</div>
+            </div>
+            <div class="productBox"></div>
+            <div class="hasMore">更多加载 <img src="https://hsimage.fotile.com/202309221716135937066.png"/> </div>
+            <div class="noMore">已经到底啦~</div>
+        </div>
+        <div class="maskShow"></div>
+    </div>
+    <!-- 搜索 End -->
+    
+    <!-- head S -->
+    <div class="headWrapBox">
+        <div class="head static">
+            <div class="zzBox"></div>
+            <!-- 导航 S -->
+            <div class="w1170">
+                <div class="menu">
+                    <h1 class="centerLogo" onclick="setTopBarGio('方太LOGO',0)"><a href="/"></a></h1>
+                    <ul>
+                        <li class="cpBtn" onclick="setTopBarGio('全部产品',0)">
+                            <a href="javascript:void(0);">全部产品</a>
+                        </li>
+                        <li class="serBtn" onclick="setTopBarGio('服务',0)">
+                            <!-- <a href="/service/index.ftl?from=fotile-pc-dh">服务</a> -->
+                            <a href="/service.html?utm_source=fotile-guanwang-pcdingbusousuo0430">服务</a>
+                        </li>
+                        <li  class="renwenBtn" onclick="setTopBarGio('幸福家',0)">
+                            <a href="/xingfu/">幸福家</a>
+                        </li>
+                        <li class="huanxinBtn" onclick="setTopBarGio('幸福焕新',0)">
+                            <a href="/rehandling.html?cate=1&utm_source=fotile-guanwang-sj-youyanji" target="_blank">幸福焕新</a>
+                        </li>
+                        <li class="mallBtn" onclick="setTopBarGio('官方商城',0)">
+                            <a href="https://www.efotile.com/?utm_source=fotile-guanwang-shouye-dingbu-shangcheng0303" target="_blank">官方商城</a>
+                        </li>
+                    </ul>
+                    <div class="shopMain" onclick="setTopBarGio('如何购买',0)">
+                        如何购买
+                    </div>
+                    <div class="shopBox">
+                        <a target="_blank" href="https://www.fotile.com/service/city/queryCity.html?utm_source=fotile-guanwang-pcdingbusousuo0430" onclick="setTopBarGio('附近门店',1)" onmouseenter="hoverFss(4)">
+                            <img class="imgIcon" src="https://hsimage.fotile.com/202309011721495781496.png" data-src="https://hsimage.fotile.com/202310302007404183287.png"/>附近门店</a>
+                        <a target="_blank" href="https://www.efotile.com/?utm_source=fotile-guanwang-shouye-dingbu-shangcheng0303" onclick="setTopBarGio('官方商城',1)" onmouseenter="hoverFss(1)">
+                            <img class="imgIcon" src="https://hsimage.fotile.com/202309011721495759892.png" data-src="https://hsimage.fotile.com/202310302008304728419.png" alt="">官方商城</a>
+                        <a target="_blank" href="https://equity.tmall.com/tm?agentId=976428&_bind=true&bc_fl_src=tmall_market_llb_1_1141052&llbPlatform=_pube&llbOsd=1" onclick="setTopBarGio('天猫官方旗舰店',1)" onmouseenter="hoverFss(2)">
+                            <img class="imgIcon" src="https://hsimage.fotile.com/202310302009097979470.png" data-src="https://hsimage.fotile.com/202309011721495757395.png" alt="">天猫官方旗舰店</a>
+                        <a target="_blank" href="https://mall.jd.com/index-1000000907.html?cu=true&utm_source=fotile-guanwang-pcdingbusousuo0430&utm_medium=tuiguang&utm_campaign=t_1001006693_1089_5742_null" onclick="setTopBarGio('京东官方旗舰店',1)" onmouseenter="hoverFss(3)">
+                            <img class="imgIcon" src="https://hsimage.fotile.com/202309011721495758408.png" data-src="https://hsimage.fotile.com/202310302009412465344.png" alt="">京东官方旗舰店</a>
+                    </div>
+                    <div class="searchB" onclick="setTopBarGio('搜索',0)">
+                        <div class="searchIcon" id="pcsearch"></div>
+                        <div class="inp">X20 PRO</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 导航 End -->
+            <div id="global_dropdown_menu"></div>
+            <script>
+                $("#global_dropdown_menu").load("/common/global_dropdown_menu2")
+            </script>
+        </div>
+    </div>
+    <div class="page-overlay"></div>    
+    <!-- / head End -->
+    
+    
+    <!-- 在线服务常见问题 dialog S -->
+    <div class="service-faq-dialog" id="serviceFaqDialog">
+        <div class="service-faq-dialog-body">
+            <div id="closeServiceFaqDialog" class="close"></div>
+            <div id="serviceFaqDialogContent">
+                <p class="placeholder">加载中...</p>
+            </div>
+    
+            <div class="service-faq-dialog-footer">
+                <h3>如果还有其他疑问，请咨询在线客服</h3>
+                <div class="online-service-control">
+                    <a href="javascript:;" class="control-btn" id="beforeOSTap" onclick="ysf_open()">
+                        <img width="100%" src="https://fotileh5.oss-cn-hangzhou.aliyuncs.com/assets/images/os_before_icon.png" alt="售前咨询">
+                    </a>
+                    <a href="javascript:;" class="control-btn" id="afterOSTap" onclick="ysf_open()">
+                        <img width="100%" src="https://fotileh5.oss-cn-hangzhou.aliyuncs.com/assets/images/os_after_icon.png" alt="售后咨询">
+                    </a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 在线服务常见问题 dialog End -->
+    
+    <!-- 在线客服 -->
+    <div class="chart-popup chartPopup" style="display:none;">
+        <div class="close closeChartPopup"></div>
+        <iframe name="chartIframe" id="chartIframe" src="" frameborder="0" align="left" width="800" height="560" scrolling="no">
+            <p>你的浏览器不支持iframe标签</p >
+        </iframe>
+    </div>
+</div>
+
+<script src="/webstatic/common/pc/js/headerHoverFix.js" type="text/javascript"></script>
+<script src="/webstatic/Public/Home/js/global.min.js" type="text/javascript"></script>
+
+<style>
+    .w_945{
+        background-color: #F5F5F5;
+        width: 945px;
+        margin: 0 auto;
+    }
+    .search-parent{
+        position: relative;
+        display: none;
+        min-height: 500px;
+        background-color: #fff;
+        z-index: 999;
+    }
+    .search_box{
+        position: absolute;
+        top:5px;
+        width: 100%;
+        background-color: #fff;
+        color: #1A1A1A;
+        cursor: pointer;
+    }
+    .searchBox1{
+        height: 40px;
+        /*border-bottom: 1px solid #1A1A1A;*/
+        display: flex;
+        align-items: center;
+    }
+    .search-img{
+        width: 14px;
+        height: 14px;
+        margin-right: 9px;
+        margin-left: 11px;
+    }
+</style>
+    <div id="bodyWapper" v-cloak>
+        <section class="section bannerBox">
+            <div class="mask"></div>
+            <div class="swiper-container" id="swiper-containerKV">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide" @mouseenter.stop.prevent="stopIt"  @mouseleave.stop.prevent="startIt" v-for="(item,index) in bannerObj" @click.stop="setClick(item.id,item.isLeave,item.wholeUrl,item.backUrl)" :key="index">
+                        <div class="wrap" style="height:100%">
+                            <div class='mytxt mycenter' v-if="item.isLeave=='1'" :key="frame_var">
+                                <!--lef/right/center-->
+                                <div :class="getLocation(item.worldLocation)">
+                                    <div class="tags" v-if="item.showLabel!='-1'" v-for="(itm,idx) in item.showLabelList" :key="idx"><span>{{itm}}</span></div>
+
+                                    <p :style="item.abstractStyle" class="slideDown op0">{{item.abstractNote}}</p>
+
+                                    <h2 :style="item.showNameStyle" class="slideDown delay1 op0">{{item.showName}}</h2>
+                                    <h2 :style="item.showNameStyle" class="slideDown delay1 op0" v-if="item.showName.indexOf('全新一代洗碗技术')>-1">高能气泡洗</h2>
+                                    <a v-if="item.mainKey!='-1'" :class="['slideDown','delay2','op0',item.mainButtonPattern==1?'btnWhite':item.mainButtonPattern==2?'btnBlack':'btnRed',item.secondKey!='-1'?'mR12':'']" style="display:inline-block;margin-top: 15px" @click.stop="openOrJump(item.mainUrl,item.mainJumpType,index,item.mainKey,1)">
+                                        <span v-html="item.mainKey" @click="setFssBanner2(index,1,item.mainKey)"></span>
+                                    </a>
+                                    <a v-if="item.secondKey!='-1'" :class="['slideDown','delay2','op0',item.secondaryButtonPattern==1?'btnWhite':item.secondaryButtonPattern==2?'btnBlack':'btnRed']" style="display:inline-block;margin-top: 15px" @click.stop="openOrJump(item.secondUrl,item.secondJumpType,index,item.secondKey,2)">
+                                        <span v-html="item.secondKey" @click="setFssBanner2(index,2,item.secondKey)"> </span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div v-if="item.originalVideoUrl" style="height: 100%">
+                                <video  :id="'video'+item.id" preload muted autoplay loop class="bg movie"
+                                        :poster="item.picUrl && item.picUrl[0]?item.picUrl[0].originalVideoUrl:''">
+                                    <source :src="item.originalVideoUrl" type="video/mp4">
+                                </video>
+                            </div>
+                           <img v-else class="demo1" :src="item.picUrl && item.picUrl[0]?item.picUrl[0].coverUrl1:''" />
+                            <div v-if="item.videoUrl" class="playVideo" @click.stop="playVideo(item.id)" style="display: none">
+                                <img src="/webstatic/Public/Home/img/KV/stopVideo.png" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+            <div class="popWindow pop1">
+                <div class="close-icon" @click="closePop">
+                    <img src="/webstatic/Public/Home/img/icon/close.png" />
+                </div>
+                <img src="https://hsimage.fotile.com/202206101022335585355.png" />
+            </div>
+            <div class="popWindow pop2">
+                <div class="close-icon" @click="closePop">
+                    <img src="/webstatic/Public/Home/img/icon/close.png" />
+                </div>
+                <div class="title">
+                    <h5>给家人换一台好厨电</h5>
+                    <a href="https://www.fotile.com/rehandling.html?cate=1&utm_source=fotile-guanwang-sj-youyanji">查看更多换新服务</a>
+                </div>
+                <div class="con">
+                    <a href="javascript:void(0);" v-for="(item,index) in classObject9" :key="index" v-if="index<2" @click="setClick(item.id,item.isLeave,item.wholeUrl,item.backUrl)">
+                            <div class="imgbox">
+                                <img :src="item.picUrl && item.picUrl[0] ?item.picUrl[0].coverUrl1:''" alt="">
+                            </div>
+                            <div class="wenzi" style="margin-right: 24px;" @mouseenter="arrowRed($event)" @mouseleave="arrowGrey($event)">
+                                <h3 :style="item.showNameStyle">{{item.showName}}</h3>
+                                <p :style="item.abstractStyle">{{item.abstractNote}}</p>
+                                <img class="arrow" style="width: 16px;"
+                                     src="/webstatic/Public/Home/img/icon/arrow.png" alt="">
+                            </div>
+                    </a>
+                </div>
+
+            </div>
+        </section>
+        <section class="section section2" id="sectionProduct" style="display: none">
+            <div class="homePageTitle">
+                方太  智慧厨房解决方案
+            </div>
+            <div class="homePageFourTitle">
+                <div :class="['homePageFourTitle-one',tabIndex==1?'active':'']" @click="switchTab(1)">智慧厨房系列</div>
+                <div :class="['homePageFourTitle-two',tabIndex==2?'active':'']" @click="switchTab(2)">排烟烹饪场景</div>
+                <div :class="['homePageFourTitle-three',tabIndex==3?'active':'']" @click="switchTab(3)">洗消饮用场景</div>
+                <div :class="['homePageFourTitle-four',tabIndex==4?'active':'']" @click="switchTab(4)">保鲜冷储场景</div>
+            </div>
+            <div class="homePageBoxs">
+                <div v-if="tabIndex===1">
+                    <div class="homePageFour-a" @click="skipCategory('/subject/ruizuo.html')"     @mouseenter="switchTaoxi21()" @mouseleave="switchTaoxi22()">
+                        <div :class="['homePageFourOne-title',taoxi2?'':'activeFont']">方太睿隐系列</div>
+                        <img :src="taoxi2?'https://hsimage.fotile.com/202412251714501676367.png':'https://hsimage.fotile.com/202409191825183454016.png'" alt="">
+                    </div>
+                     <div class="homePageFour-a" @click="skipCategory('https://www.efotile.com/zty/202210201/#/')"     @mouseenter="switchTaoxi1()" @mouseleave="switchTaoxi2()">
+                        <div :class="['homePageFourOne-title',taoxi?'':'activeFont']">方太玥影系列</div>
+                        <img :src="taoxi?'https://hsimage.fotile.com/202409191800255572269.png':'https://hsimage.fotile.com/202507092045366027590.jpg'" alt="">
+                    </div>
+                    <div class="homePageFour-a" @click="skipCategory('/subject/cloudShadow.html')"     @mouseenter="switchTaoxi31()" @mouseleave="switchTaoxi32()">
+                        <div :class="['homePageFourOne-title',taoxi3?'':'activeFont']">方太云影系列</div>
+                        <img :src="taoxi3?'https://hsimage.fotile.com/202409191813174146406.png':'https://hsimage.fotile.com/202409191825270311807.png'" alt="">
+                    </div>
+                </div>
+                <div class="homePageFour-b" v-if="tabIndex===2">
+                    <div class="homePageFourTwo-box" v-for="(item,index) in homePageFour1" :key="index"
+                         @mouseenter="switchImg1(item)" @mouseleave="switchImg2(item)" @click="skipCategory(item.url)">
+                        <div :class="['homePageFourTwo-title',item.isOne?'':'activeFont']">{{item.title}}</div>
+                        <img :src="item.img1" alt="" v-if="item.isOne" class="homePageFourTwo-img">
+                        <img :src="item.img2" alt="" v-else class="homePageFourTwo-img">
+                    </div>
+                </div>
+                <div class="homePageFour-c" v-if="tabIndex===3">
+                    <div class="homePageFourThree-box" v-for="(item,index) in homePageFour2" :key="index"
+                         @mouseenter="switchImg1(item)" @mouseleave="switchImg2(item)" @click="skipCategory(item.url)">
+                        <div :class="['homePageFourThree-title',item.isOne?'':'activeFont']">{{item.title}}</div>
+                        <img :src="item.img1" alt="" v-if="item.isOne" class="homePageFourTwo-img">
+                        <img :src="item.img2" alt="" v-else class="homePageFourTwo-img">
+                    </div>
+                </div>
+
+                <div class="homePageFour-a"  v-if="tabIndex===4"  @click="skipCategory('/chanpin/3668/')"     @mouseenter="switchTaoxi21()" @mouseleave="switchTaoxi22()">
+                    <div :class="['homePageFourOne-title',taoxi2?'':'activeFont']">冰箱</div>
+                    <img :src="taoxi2?'https://hsimage.fotile.com/202412031349347464770.png':'https://hsimage.fotile.com/202412031349418724955.png'" alt="">
+                </div>
+            </div>
+        </section>
+        <section class="sectionbanner" v-if="bannerList && bannerList.length">
+            <div class="swiper-container" id="swiper-container2">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide" v-for="(item,index) in bannerList">
+                        <block v-if="!item.video">
+                            <a :href="item.link">
+                            <div class="textWapper wraper2">
+                                <div class="newProductDetail op0">
+                                    <p>{{item.desc}}</p>
+                                </div>
+                                <div class="newProductTitle op0">
+                                    <p>{{item.title}}</p>
+                                </div>
+
+                                    <div class="getMore op0 btnWhite" @click="setFssBanner(index)" v-if="item.linktxt">
+                                        {{item.linktxt}}
+                                    </div>
+
+                            </div>
+                            <img class="demo1" :src="item.url" />
+                            </a>
+                        </block>
+                        <block v-else>
+                            <div class="textWapperVideo wraper2">
+                                <div class="newProductTitle op0">
+                                    <p>{{item.title}}</p>
+                                </div>
+                                <div class="newProductDetail op0">
+                                    <p>{{item.desc}}</p>
+                                </div>
+                                <a :href="item.link">
+                                    <div class="getMore op0">
+                                        {{item.linktxt}}
+                                        <img class="arrow" src="https://hsimage.fotile.com/202212261144212467788.png" alt="">
+                                    </div>
+                                </a>
+                            </div>
+                            <video preload muted autoplay loop :poster="item.poster" style="width:100%">
+                                <source :src="item.url" type="video/mp4">
+                            </video>
+                        </block>
+
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </section>
+        <section class="section section3" v-if="classObject3 && classObject3.length>0" @click="setClick(classObject3[0].id,classObject3[0].isLeave,classObject3[0].wholeUrl,classObject3[0].backUrl)">
+            <div class='mytxt center' v-if="classObject3[0].isLeave=='1'">
+                <div :class="getLocation(classObject3[0].worldLocation)">
+                    <h2>{{classObject3[0].showName}}</h2>
+                    <p>{{classObject3[0].abstractNote}}</p>
+                    <a v-if="classObject3[0].mainKey!='-1'" class="link" @click="setFss()" :style="classObject3[0].mainKeyStyle" :href="classObject3[0].isLeave=='1' && classObject3[0].mainUrl!='-1'?classObject3[0].mainUrl:''" target="_blank">
+                        {{classObject3[0].mainKey}} <span class="BTborder" :style="classObject3[0].mainKeyStyle"></span>
+                    </a>
+                </div>
+            </div>
+            <video v-if="classObject3[0].videoUrl" :id="'video'+classObject3[0].id" :poster="classObject3[0].picUrl && classObject3[0].picUrl[0]?classObject3[0].picUrl[0].coverUrl1:''" preload muted autoplay loop >
+                <source :src="classObject3[0].videoUrl" type="video/mp4">
+            </video>
+            <img v-else :src="classObject3[0].picUrl?classObject3[0].picUrl[0].coverUrl1:''" style="object-fit: cover;">
+        </section>
+
+        <section class="section section6" id="boxInfo">
+            <ul>
+                <li v-for="(item,index) in picList" :key="index" :id="'box'+index">
+                    <div class="middleTxt">
+                        <h5 :class="item.color">{{item.title}}</h5>
+                        <p :class="item.color">{{item.desc}}</p>
+                        <a :class="item.color" :href="item.link" target="_blank" @click="setFssBanner3(item.linktxt,1,index)">
+                            <span :class="item.color=='white'?'btnWhite':'btnBlack'">{{item.linktxt}}</span>
+                        </a>
+                        <a v-if="item.linktxt2" target="_blank" @click="setFssBanner3(item.linktxt2,2,index)" :href="item.link2" :class="item.linktxt2?'mgl10':''">
+                            <span :class="item.color=='white'?'btnWhite':'btnBlack'">{{item.linktxt2}}</span>
+                        </a>
+                    </div>
+                    <div>
+                    <video muted
+                        autoplay
+                            width="100%"
+                               preload
+                               x5-playsinline
+                               playsinline
+                               webkit-playsinline
+                               x5-video-player-type='h5'
+                               x5-video-player-fullscreen='false'
+                               x5-video-orientation=“landscape|portrait”
+                               webkit-playsinline=“true”
+                               playsinline=“true”
+                               loop
+                               :poster="item.url+'?x-oss-process=video/snapshot,t_1000,m_fast'"
+                               class="mianVideo cs"
+                               v-if="item.type=='video'"
+                        >
+                            <source :src="item.url"  >
+                        </video>
+                        <img v-else :src="item.url" alt="">
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+
+        <!--视频弹窗-->
+        <div class="video_player" style="display: none">
+            <div class="video_close"><img @click="exitFullscreen" src="/webstatic/Public/Home/img/icon/video_close.png"></div>
+            <div class="video_mask"></div>
+            <div class="video_content" id="video_content">
+                <div style="height: 100%">
+                    <video id="myVideo"  autoplay controls preload="auto" style='width: 100%;height: 100%'>
+                        <source id="source" src="" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+<script type="text/javascript" src="/webstatic/newSrc/js/jquery.js"></script>
+<script src="/webstatic/Public/Home/js/cookie.js"></script>
+<script src="/webstatic/Public/Home/new/js/swiper-3.4.2.min.js" type="text/javascript"></script>
+<script src="/webstatic/Public/Home/js/homePage.js" type="text/javascript"></script>
+
+
+<link href="/webstatic/common/pc/css/global.css" rel="stylesheet" type="text/css"/>
+<div class="global_footer_new" style="background: #f5f5f5">
+    <div class="bgcolor">
+        <div class="icons1 w1170" >
+            <div v-for="(src,index) in icons"  @click.native="getdata111()">
+                <img :src="src" @mouseenter="showQrcode1(index)" @mouseleave="hideQrcode1(index)" alt="">
+                <img class="myqrcode" v-if="index==0 && showcode1" src="https://hsimage.fotile.com/202212071022114295782.png" alt="">
+                <img class="myqrcode" v-if="index==1 && showcode2" src="https://hsimage.fotile.com/202212071022114287666.png" alt="">
+            </div>
+        </div>
+
+    </div>
+    <div class="footerNew">
+        <div class="bgcolor">
+            <div class="w1170">
+                <div class="info">
+                    <ul>
+                        <li style="width:153px;">
+                            <h6>所有产品</h6>
+                            <a href="/chanpin/4854/" target="_blank" onclick="setFs(2,'智慧厨房系列','pro')">智慧厨房系列</a>
+                            <a href="/chanpin/565/" target="_blank" onclick="setFs(3,'集成烹饪中心','pro')">集成烹饪中心</a>
+                            <a href="/chanpin/1661/" target="_blank" onclick="setFs(4,'洗碗机','pro')">洗碗机</a>
+                            <a href="/chanpin/297/" target="_blank" onclick="setFs(5,'吸油烟机','pro')">吸油烟机</a>
+                            <a href="/chanpin/486/" target="_blank" onclick="setFs(6,'嵌入式灶具','pro')">嵌入式灶具</a>
+                            <a href="/chanpin/563/" target="_blank" onclick="setFs(7,'净水机','pro')">净水机</a>
+                            <a href="/chanpin/568/" target="_blank" onclick="setFs(8,'烹饪机','pro')">烹饪机</a>
+                            <a href="/subject/fridge3.html" target="_blank" onclick="setFs(10,'智慧原鲜冰箱','pro')">智慧原鲜冰箱</a>
+                        </li>
+                        <li style="width:165px;">
+                            <h6 style="width:165px; "> <span style="opacity: 0">占位置</span></h6>
+                            <a href="/chanpin/560/" target="_blank" onclick="setFs(11,'燃气热水器','pro')">燃气热水器</a>
+                            <a href="/chanpin/548/" target="_blank" onclick="setFs(12,'嵌入式消毒柜','pro')">嵌入式消毒柜</a>
+                            <a href="/chanpin/554/" target="_blank" onclick="setFs(13,'嵌入式蒸箱','pro')">嵌入式蒸箱</a>
+                            <a href="/chanpin/555/" target="_blank" onclick="setFs(14,'嵌入式烤箱','pro')">嵌入式烤箱</a>
+                            <a href="/chanpin/556/" target="_blank" onclick="setFs(15,'嵌入式微波炉','pro')">嵌入式微波炉</a>
+                            <a href="/chanpin/2425/" target="_blank" onclick="setFs(16,'集成灶','pro')">集成灶</a>
+                            <a href="/chanpin/597/" target="_blank" onclick="setFs(17,'智联油烟净化系统','pro')">智联油烟净化系统</a>
+                            <a href="/subject/fiks.html" target="_blank" onclick="setFs(18,'FIKS智能系统','pro')">FIKS智能系统</a>
+
+                        </li>
+                        <li style="width:153px;">
+                            <h6>如何购买</h6>
+                            <a href="/service/city/queryCity.html?utm_source=fotile-guanwang-shouye-dibu-zhuanmaid0303"  target="_blank" onclick="setFs(1,'查找附近门店','buy')">查找附近门店</a>
+                            <a class="utm-source" rel="nofollow"  href="https://www.efotile.com/?utm_source=fotile-guanwang-shouye-weibu-shangcheng0303" target="_blank" onclick="setFs(2,'方太商城','buy')">方太商城</a>
+                            <a rel="nofollow"  href="https://mall.jd.com/index-1000000907.html?cu=true&utm_source=kong&utm_medium=tuiguang&utm_campaign=t_1001006693_1089_5742_null"
+                               target="_blank" onclick="setFs(3,'方太京东旗舰店','buy')">方太京东旗舰店</a>
+                            <a rel="nofollow" href="https://equity.tmall.com/tm?agentId=976428&_bind=true&bc_fl_src=tmall_market_llb_1_1141052&llbPlatform=_pube&llbOsd=1"
+                               target="_blank" onclick="setFs(4,'方太天猫旗舰店','buy')">方太天猫旗舰店</a>
+                        </li>
+                        <li style="width:141px;">
+                            <h6>服务与帮助</h6>
+                            <a href="/service.html" target="_blank" onclick="setFs(1,'服务首页','service')">服务首页</a>
+                            <a href="/service/fuwuzhengce.html" target="_blank" onclick="setFs(2,'服务政策','service')">服务政策</a>
+                            <a href="/service/fuwushoufei.html" target="_blank" onclick="setFs(3,'服务收费标准','service')">服务收费标准</a>
+                            <a onclick="gioBottom(2,'在线客服')">在线客服</a>
+                            <a onclick="gioBottom(1,'附近门店')" >查找门店</a>
+                        </li>
+                        <li style="width:129px;">
+                            <h6>方太幸福家</h6>
+                            <a href="/xingfu/" target="_blank"  onclick="setFs(1,'方太幸福家首页','xin')">方太幸福家首页</a>
+                            <a href="/xingfu/cooking.html" target="_blank" onclick="setFs(2,'美食烹饪','xin')">美食烹饪</a>
+                            <a href="/xingfu/renovation.html" target="_blank" onclick="setFs(3,'居家装修','xin')">居家装修</a>
+                            <a href="/xingfu/health.html" target="_blank" onclick="setFs(4,'健康养生','xin')">健康养生</a>
+                            <a href="/xingfu/grow.html" target="_blank" onclick="setFs(5,'幸福成长','xin')">幸福成长</a>
+                            <a href="https://www.fotile.com/xingfu/22316.html" target="_blank" onclick="setFs(6,'APP下载','xin')">APP下载</a>
+                        </li>
+                        <li style="width:117px;">
+                            <h6>媒体中心</h6>
+                            <a href="/news" target="_blank" onclick="setFs(1,'方太资讯','media')">方太资讯</a>
+                            <a href="/video.html" target="_blank" onclick="setFs(2,'方太影像','media')">方太影像</a>
+                        </li>
+
+
+                        <li style="width:129px;">
+                            <h6>寻求合作</h6>
+                            <a href="/brand/contact.html" rel="nofollow" target="_blank" onclick="setFs(1,'联系我们','contact')">联系我们</a>
+                            <a href="/ProgrammeIndex.html" rel="nofollow" target="_blank" onclick="setFs(2,'工程合作','contact')">工程合作</a>
+                            <a href="/brand/dealer.html" rel="nofollow" target="_blank" onclick="setFs(3,'经销加盟','contact')">经销加盟</a>
+                            <a href="https://eps.fotile.com:5688/" target="_blank" onclick="setFs(4,'供应商注册平台','contact')">供应商注册平台</a>
+                        </li>
+                        <li style="width:130px;">
+                            <h6>关于方太</h6>
+                            <a href="/brand/about.html" rel="nofollow"  target="_blank" onclick="setFs(1,'方太简介','about')">方太简介</a>
+                            <a href="/brand/history.html" rel="nofollow"  target="_blank" onclick="setFs(2,'发展历程','about')">发展历程</a>
+                            <a href="/brand/power.html" rel="nofollow"  target="_blank" onclick="setFs(3,'方太实力','about')">方太实力</a>
+                            <a href="/brand/obligation.html" rel="nofollow"  target="_blank" onclick="setFs(4,'社会责任','about')">社会责任</a>
+                            <a href="https://hangwanshuyuan.cn/" rel="nofollow"  target="_blank">杭湾书院</a>
+                            <a href="https://www.fotile.com/news/567.html" rel="nofollow"  target="_blank" onclick="setFs(5,'方太文化研究院','about')">方太文化研究院</a>
+                            <a href="https://www.aliwork.com/APP_UXVYUJ79VJLGL8O8LR31/custom/FORM-J7966ZA1HOQ4DDEZE9224D7588MV2AEZ9DZ9LP2" rel="nofollow"  target="_blank" onclick="setFs(6,'“仁智”协同平台','about')">“仁智”协同平台</a>
+                        </li>
+                        <li style="width:50px;">
+                            <h6>加入方太</h6>
+                            <a href="http://fotile.zhiye.com/index" rel="nofollow" target="_blank" onclick="setFs(1,'社会招聘','zhaopin')">社会招聘</a>
+                            <a href="http://fotile.zhiye.com/school" rel="nofollow" target="_blank" onclick="setFs(2,'校园招聘','zhaopin')">校园招聘</a>
+                         </li>   
+                    </ul>
+                </div>
+                <div style="width: 100%;height: 100%;position: relative;box-sizing: border-box;padding-bottom:37px ;    border-bottom: 1px solid #e5e5e5;">
+                    <div class="tipTxt2"  id="footerContent">
+                    </div>
+                    <div class="tipTxt2" id="footerAllContent">
+                    </div>
+                    <div id="load-more">加载更多  ></div>
+                    <div class="phoneNumber">
+                        <div class="phoneNumber_oneline">952315</div>
+                        <div class="phoneNumber_twoline">方太全国服务热线</div>
+                    </div>
+                </div>
+
+                </div>
+
+                <div class="foot_copy w1170" style="justify-content: start">
+                    <div class="f_logo"></div>
+                    <div class="f_copyright">
+                        ©1996-
+                        <span class="year"></span>
+                        方太集团 | <a style="color: #717171;" href="http://beian.miit.gov.cn" target="_blank">浙ICP备13025845号-31</a>
+                        | <a style="color: #717171;"
+                             href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=33029202000036"
+                             target="_blank">浙公网安备 33029202000036号</a>
+                    </div>
+                    <div class="ft_links">
+                        <a href="/provisions.html" target="_blank">法律声明</a><u>|</u>
+                        <a href="/help/link.html" target="_blank">友情链接</a><u>|</u>
+                        <a href="http://fotileglobal.com/" target="_blank">海外官网</a><u>|</u>
+                        <a onclick="trackLog('隐私中心')" href="/account/privacy.html" target="_blank">隐私中心</a>
+                    </div>
+                    <div class="f_other">
+                        <a href="https://hsimage.fotile.com/202510241618475481776.jpeg" class="logo3"
+                           target="_blank"></a>
+                        <a href="javascript:;" class="logo4"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+
+<style>
+    #isShows{
+        display: none;
+    }
+    .phoneNumber{
+        position: absolute;
+        top: 37px;
+        right: 0px;
+    }
+    .phoneNumber_oneline{
+        height: 48px;
+        font-size: 42px;
+        font-family: PingFangSC-Semibold, PingFang SC;
+        font-weight: 600;
+        color: #000000;
+        line-height: 48px;
+    }
+    .phoneNumber_twoline{
+        height: 20px;
+        font-size: 12px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        color: #61646A;
+        line-height: 20px;
+        text-align: center;
+    }
+    #footerContent{
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 29;
+        -webkit-box-orient: vertical;
+    }
+    #load-more{
+        font-size: 12px;
+        color: rgba(155,155,155,0.5);
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 600;
+        display: none;
+        margin-top: 5px;
+        cursor: pointer;
+    }
+    #footerAllContent{
+        display: none;
+    }
+
+</style>
+<script src="https://lib.baomitu.com/vue/2.5.17/vue.min.js"></script>
+
+<script src="/webstatic/common/pc/js/global.js"></script>
+<script>
+    var mydate=new Date();
+    function setShowFn(item){
+        document.getElementById('loadMores').style.display='none'
+        document.getElementById('isShows').style.display='block'
+    }
+    var year =mydate.getFullYear();
+    $('.year').text(year);
+
+    function gioBottom(idx,name){
+        switch(idx){
+           case 2:
+               ysf_open();
+               break;
+            case 1:
+                openStore()
+                break;
+        }
+        gdp('track', 'FT_flowClick', {
+            utmSource_var: getQueryString('utm_source')?getQueryString('utm_source'):'-',//广告来源
+            pageName_var: _moduleName,//页面名称
+            pageUrl_var: window.location.href,//页面地址
+            moduleName_var: '悬浮窗',//模块名称
+            positionNumber_var: idx,//坑位
+            pitName_var: name,//流量位名称
+            frame_var: '-',//帧
+            bannerNum_var:'-',
+        });
+    }
+
+    function trackLog(pitName_var) {
+        gdp('track', 'FT_flowClick', {
+        utmSource_var:getQueryString('utm_source')?getQueryString('utm_source'):'-',//广告来源
+        pageName_var: _module,//页面名称
+        pageUrl_var: window.location.href,//页面地址
+        tabName_var: '-',
+        moduleName_var: '底部',//模块名称
+        positionNumber_var: '-',//坑位
+        frame_var: '-',//帧数
+        bannerNum_var:'-', // 上报点击所在的banner位置，如1，2，3
+        pitName_var: pitName_var,//流量位名称
+        });
+    }
+    //附近门店
+    function  openStore(){
+        window.location.href='/service/city/queryCity.html'
+    }
+
+    function getAdver(){
+        $.ajax({
+            method: 'GET',
+            url: "/common/getCustomAdvert?codes=pc-ow-footer-001",
+            success: (res)=>{
+                if(res.success){
+                    // console.log(res.data['pc-ow-footer-001'][0].abstractNote)
+                    $(".tipTxt2").html(res.data['pc-ow-footer-001'][0].abstractNote);
+
+
+
+
+
+                    const richTextContainer = document.getElementById("footerContent");
+                    const content = document.getElementById("footerContent");
+                    const loadMoreButton = document.getElementById("load-more");
+                    const footerAllContent=document.getElementById("footerAllContent");
+                    // 检查内容高度是否超过最大高度
+                    if (content.scrollHeight > richTextContainer.clientHeight) {
+                        loadMoreButton.style.display = "block"; // 显示加载更多按钮
+                    }
+
+                    // 点击加载更多按钮时展开全部内容
+                    loadMoreButton.addEventListener("click", function() {
+
+                        loadMoreButton.style.display = "none"; // 隐藏加载更多按钮
+                        footerAllContent.style.display= "block";
+                        content.style.display='none'
+                    });
+                }
+                // console.log(555,res.data)
+            },
+            error: function(){
+            }
+        });
+
+    }
+    getAdver()
+
+    $('.myqrcode1').hide()
+    $('.myqrcode2').hide()
+
+</script>
+<style>
+    .myqrcode{
+        bottom: 65px;
+        z-index: 9999999;
+    }
+</style><link rel="stylesheet" href="/webstatic/birne9/homepage/pc/style.css">
+
+<script>
+    // 售前、后客服
+    function ysf_open(type){
+        //ysf('open');
+        window.open('/help/qiyukf.html')
+    }
+</script>
+
+<style>
+    .common_sideBar {
+        position: fixed;
+        right: 11px;
+        bottom: 100px;
+        cursor: pointer;
+        z-index: 10001;
+    }
+    .common_sideBar > .common_sideBar_top {
+        width: 68px;
+        min-height: 61px;
+        background: rgba(156, 29, 34, 0.85);
+        border-radius: 4px;
+        backdrop-filter: blur(5px);
+        font-size: 12px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        color: #FFFFFF;
+        overflow: hidden;
+        padding-bottom: 5px;
+    }
+    .common_sideBar > .common_sideBar_top:hover {
+        background: #C3242A;
+    }
+    .common_sideBar > .common_sideBar_top > img {
+        width: 24px;
+        height: 24px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 12px;
+    }
+    .common_sideBar > .common_sideBar_top > .common_sideBar_top_text {
+        text-align: center;
+        margin-top: 3px;
+    }
+    .common_sideBar_bottom {
+        width: 68px;
+        min-height: 148px;
+        background: rgba(255, 255, 255, 0.85);
+        border-radius: 4px;
+        backdrop-filter: blur(5px);
+        /*overflow: hidden;*/
+        margin-top: 10px;
+        text-align: center;
+    }
+    .common_sideBar_bottom_box {
+        /*overflow: hidden;*/
+        font-size: 12px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        color: #000000;
+        box-sizing: border-box;
+        padding-bottom: 10px;
+    }
+    .common_sideBar_bottom_box  img {
+        width: 24px;
+        height: 24px;
+        margin-top: 12px;
+    }
+    .common_sideBar_bottom_box
+    .common_sideBar_bottom_box_text {
+        margin-top: 3px;
+    }
+
+    .common_sideBar_bottom_serve{
+        position: relative;
+    }
+    .common_sideBar_bottom_qrCode{
+        position: absolute;
+        top: 0px;
+        right: 70px;
+        /*height: 100px;*/
+        width: 100px;
+        background: #fff;
+        display: none;
+
+    }
+    .common_sideBar_bottom_qrCode img{
+        width: 78px;
+        height: 78px;
+    }
+
+</style>
+<div class="common_sideBar" >
+        <div class="common_sideBar_top" onclick="openDialog()">
+            <img src="https://hsimage.fotile.com/202308211858553323066.png" alt="" class="defaultGraph">
+            <div class="common_sideBar_top_text showName" style="margin-bottom: 5px"></div>
+        </div>
+        <div class="common_sideBar_bottom">
+            <div class="common_sideBar_bottom_box common_sideBar_bottom_serve" onclick="openServe()">
+
+                <img src="https://hsimage.fotile.com/202309132104149396112.png" alt="">
+                <div class="common_sideBar_bottom_box_text">
+                 至诚服务
+                </div>
+
+
+            </div>
+            <div class="common_sideBar_bottom_box" onclick="kefu()">
+                <img src="https://hsimage.fotile.com/202502252015227123966.png" alt="">
+                <div class="common_sideBar_bottom_box_text">在线客服</div>
+            </div>
+            <div class="common_sideBar_bottom_box common_sideBar_bottom_box_store" onclick="goStore()">
+                <img src="https://hsimage.fotile.com/202502252015227025129.png" alt="">
+                <div class="common_sideBar_bottom_box_text" >附近门店</div>
+            </div>
+            <div class="common_sideBar_bottom_box common_sideBar_bottom_backTop" onclick="backToTheTop()">
+                <img src="https://hsimage.fotile.com/202308211946276086243.png" alt="">
+                <div class="common_sideBar_bottom_box_text" >TOP</div>
+            </div>
+            
+        </div>
+    </div>
+<script src="https://lib.baomitu.com/jquery/2.0.0/jquery.js"></script>
+<script src="https://lib.baomitu.com/vue/2.5.17/vue.min.js"></script>
+<script src="/webstatic/Public/Home/js/cookie.js"></script>
+<style>
+    .fix-reservePop{
+        display: none;
+        transition: all 0.5s;
+    }
+</style>
+
+<style>
+    .markedWords{
+        box-sizing: border-box;
+        padding: 10px 20px;
+        font-size: 15px;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        color: #FFFFFF;
+        display: none;
+        width: 200px;
+        min-width: 250px;
+        position: fixed;
+        top: 200px;
+        z-index: 999999;
+        right: 0;
+        left: 0;
+        margin: 0 auto;
+        text-align: center;
+        background: rgba(0,0,0,0.6);
+
+    }
+    .swiper-container-Y {
+        width: 100%;
+    }
+    .leftWrapper .swiper-slide {
+        background: transparent;
+    }
+    .leftWrapper .swiper-slide div{
+        width:100%;
+        border-radius:7px;
+        /*margin:10px 0 10px 4%;*/
+        position: relative;
+    }
+    .leftWrapper .swiper-slide div h5{
+        font-family: PingFang SC, PingFang SC;
+        font-weight: 600;
+        font-size: 20px;
+        color: #FFFFFF;
+        line-height: 28px;
+        letter-spacing: 1px;
+        position: absolute;
+        bottom: 30px;
+        left: 35px;
+    }
+    .leftWrapper .swiper-slide div video{
+        width:100%;
+        display:block;
+        border-radius:7px;
+    }
+
+</style>
+<div class="markedWords">
+    请保存后再看
+</div>
+<div class="fix-reservePop">
+    <div class="reservePop_box">
+        <div class="reservePop" >
+            <div class="popwindow1 popwindow1Animate sendsms-dialog-body">
+                <div id="closeSendsmsDialog" class="close" @click="closePop"></div>
+                <div class="leftWrapper">
+                    <h5 class="Title">幸福焕新再补贴<br/>智慧厨电选方太</h5>
+                    <div class="swiper-container-Y" style="transform: translateX(28px);">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <div style="background: #000;height: 100%;height: 338px">
+                                    <video class="adsVideo2" id="adsVideo2" src="https://hsvod.fotile.com/20fd970654d471f1a3304531959d0102/62ea411f99d84d4c921d06de0f6294b9-c328369c9eebcda491f632426aa99801-od-S00000001-200000.mp4" poster="https://hsvod.fotile.com/20fd970654d471f1a3304531959d0102/62ea411f99d84d4c921d06de0f6294b9-c328369c9eebcda491f632426aa99801-od-S00000001-200000.mp4?x-oss-process=video/snapshot,t_1000,m_fast" autoplay loop muted></video>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div style="background: #000;height: 100%;height: 338px">
+                                    <video class="adsVideo3" id="adsVideo3" src="https://hsvod.fotile.com/805cfaf6827671f0bfec5420848d0102/1f8dc9df2dec4d768c5ad950969c8ef5-11968c42c7ba30b0a97c884857f573be-od-S00000001-200000.mp4" poster="https://hsvod.fotile.com/805cfaf6827671f0bfec5420848d0102/1f8dc9df2dec4d768c5ad950969c8ef5-11968c42c7ba30b0a97c884857f573be-od-S00000001-200000.mp4?x-oss-process=video/snapshot,t_1000,m_fast" loop muted></video>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div style="background: #000;height: 100%;height: 338px">
+                                    <video class="adsVideo1" id="adsVideo1" src="https://hsvod.fotile.com/c0da6c074cfc71f180596723b78e0102/61d963b285b24020bc6b8504f2283c02-af1b4f6eba16c093ac9f1bd5ea96c4a3-od-S00000001-200000.mp4" poster="https://hsimage.fotile.com/202502131053202193976.jpg" loop muted></video>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="rightBox">
+                    <div>
+                        <span>扫码领取</span>
+                        <span class="redColor">专属权益</span>
+                    </div>
+
+                    <img src="https://hsimage.fotile.com/202502111146483165519.png" alt="" class="qrcode">
+                    <div>
+                        <div class="textBox Box2" @click="jumpSrc('/h5/chanpin/565/','排烟烹饪场景解决方案')">
+                            <div class="ani1" style="padding-top: 15px">
+                                <h6 class="text1">排烟烹饪场景解决方案</h6>
+                                <h6>进一步了解 <img class="arrow-R" src="https://hsimage.fotile.com/202502181732338254578.png" alt=""></h6>
+                            </div>
+                            <img class="ani1" id="productImg" src="https://hsimage.fotile.com/202502072029495423255.png" alt="">
+                        </div>
+                        <div class="textBox Box3" @click="jumpSrc('/h5/chanpin/1661/','洗消饮用场景解决方案')">
+                            <div class="ani1" style="padding-top: 15px">
+                                <h6 class="text1">洗消饮用场景解决方案</h6>
+                                <h6>进一步了解 <img class="arrow-R" src="https://hsimage.fotile.com/202502181732338254578.png" alt=""></h6>
+                            </div>
+                            <img class="ani1" id="productImg" src="https://hsimage.fotile.com/202502072000363343664.png" alt="">
+                        </div>
+                        <div class="textBox Box1" @click="jumpSrc('/h5/chanpin/3668/','保鲜冷储场景解决方案')">
+                            <div class="ani1" style="padding-top: 15px">
+                                <h6 class="text1">保鲜冷储场景解决方案</h6>
+                                <h6>进一步了解  <img class="arrow-R" src="https://hsimage.fotile.com/202502181732338254578.png" alt=""></h6>
+                            </div>
+                            <img class="ani1" id="productImg" src="https://hsimage.fotile.com/202502072029495424015.png" alt="">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="popmaskAni" @click="closePop"></div>
+    </div>
+</div>
+
+<script src="/webstatic/birne9/reservePop/script.js"></script>
+<link rel="stylesheet" href="/webstatic/birne9/reservePop/style.css">
+
+<link href="/webstatic/Public/swiper6Comp/swiper.css" rel="stylesheet" type="text/css">
+<script src="/webstatic/Public/swiper6Comp/swiper.js"></script>
+<script>
+
+</script>
+
+<script>
+    var pathname=window.location.pathname;
+    var _module="";
+    if(pathname.indexOf('chanpin')>-1){
+        _module="产品列表页"
+    }else if(pathname.indexOf('product/')>-1){
+        _module="产品B级页"
+    }else if(pathname.indexOf('/service.html')>-1){
+        _module="服务首页"
+    }else if(pathname.indexOf('/search')>-1){
+        _module="搜索结果页"
+    }else if(pathname=='/' || pathname=='/homePage.html'){
+        _module="首页"
+    }else if(pathname.indexOf('/survey.html')>-1){
+        _module="咨询留资页"
+    }else if(pathname.indexOf('/rehandling.html')>-1){
+        _module="换新服务页"
+    }else if(pathname=='/news'){
+        _module="资讯列表页"
+    }else{
+        _module=document.title
+    }
+    let advertArr={}
+    function  openDialog(){
+        // 埋点
+        let name =$('.showName').text()
+        gdp('track', 'FT_flowClick', {
+            utmSource_var:getQueryString('utm_source')?getQueryString('utm_source'):'-',//广告来源
+            pageName_var: _module,//页面名称
+            pageUrl_var: window.location.href,//页面地址
+            moduleName_var: _module+'悬浮条',//模块名称
+            positionNumber_var: '1',//坑位
+            pitName_var: name,//流量位名称
+            frame_var:'-',
+            bannerNum_var:'-'
+        });
+        gdp('track', 'FT_consultRetainEntranceClick', {
+            utmSource_var:getQueryString('utm_source')?getQueryString('utm_source'):'-',//广告来源
+            pageName_var: _module,//页面名称
+            pageUrl_var: window.location.href,//页面地址
+            moduleName_var:  _module+'悬浮条',//模块名称
+            positionNumber_var:'1',//坑位
+            pitName_var:name,//流量位名称
+            frame_var:'-',
+            bannerNum_var:'-',
+            formName_var:'1000元添礼券限时领'
+        });
+        if(advertArr && advertArr.length>0 && advertArr[0].wholeUrl && advertArr[0].wholeUrl !='-1'){
+            window.open(advertArr[0].wholeUrl)
+        }else{
+            // 全局初始化方法
+            globalFn()
+        }
+    }
+
+   const backToTheTop=()=>{
+       const options = {
+           top: 0,
+           behavior: "smooth",
+       };
+       gdp('track', 'FT_flowClick', {
+           utmSource_var:getQueryString('utm_source')?getQueryString('utm_source'):'-',//广告来源
+           pageName_var: _module,//页面名称
+           pageUrl_var: window.location.href,//页面地址
+           moduleName_var: _module+'悬浮条',//模块名称
+           positionNumber_var: '5',//坑位
+           pitName_var: 'top',//流量位名称
+           frame_var:'-',
+           bannerNum_var:'-'
+       });
+       window.scrollTo(options);
+    }
+   // 获取回到顶部的按钮
+   const backTopBtn=document.getElementsByClassName('common_sideBar_bottom_backTop')[0]
+   // 附近门店的按钮
+   const storeBtn=document.getElementsByClassName('common_sideBar_bottom_box_store')[0]
+
+   function isShow(){
+       // 浏览器高度
+       const  outerHeight=  window.outerHeight
+       const scrollY = document.documentElement.scrollTop || document.body.scrollTop
+       if(scrollY<outerHeight){
+           backTopBtn.style.display='none'
+           storeBtn.style.marginBottom='20px'
+       }else{
+           backTopBtn.style.display='block'
+           storeBtn.style.marginBottom='0px'
+       }
+
+   }
+   isShow()
+   window.addEventListener('scroll',(e)=>{
+       isShow()
+
+   })
+    $('.common_sideBar_bottom_qrCode').hide()
+
+    $('.common_sideBar_bottom_serve').on({
+        mouseover : function(){
+          $('.common_sideBar_bottom_qrCode').show()
+        } ,
+        mouseout : function(){
+            $('.common_sideBar_bottom_qrCode').hide()
+        }
+    }) ;
+
+//    获取广告位的信息
+    function  getAdvertFn(){
+        const codes='PC-ow-active-001'
+        $.ajax({
+            method: 'GET',
+            url: "/common/getCustomAdvert?codes="+codes,
+            success: (res) =>{
+                if(res.success){
+                    advertArr=res.data[codes]
+                    if(advertArr && advertArr.length>0){
+                        if(advertArr[0].showName.length>8){
+                            $('.showName').html(advertArr[0].showName.substring(0, 8))
+                        }else{
+                            $('.showName').html(advertArr[0].showName)
+                        }
+                        if( advertArr[0].picUrl && advertArr[0].picUrl.length>0){
+                            $('.defaultGraph').attr("src", advertArr[0].picUrl[0].coverUrl1);
+                        }
+
+                    }else{
+                        $('.common_sideBar_top').hide()
+                    }
+
+
+                }
+                // console.log('pc-ow-search-001', res)
+            },
+            error: (error)=> {
+            }
+        });
+    }
+    getAdvertFn()
+    function  openServe(){
+        gdp('track', 'FT_flowClick', {
+            utmSource_var:getQueryString('utm_source')?getQueryString('utm_source'):'-',//广告来源
+            pageName_var: _module,//页面名称
+            pageUrl_var: window.location.href,//页面地址
+            moduleName_var: _module+'悬浮条',//模块名称
+            positionNumber_var: '2',//坑位
+            pitName_var: '至诚服务',//流量位名称
+            frame_var:'-',
+            bannerNum_var:'-'
+        });
+        window.open('/service.html?utm_source=fotile-guanwang-pcdingbusousuo0430')
+    }
+    function kefu(){
+        gdp('track', 'FT_customerServiceEntranceClick ', {
+            utmSource_var:getQueryString('utm_source')?getQueryString('utm_source'):'-',//广告来源
+            pageName_var: _module,//页面名称
+            pageUrl_var: window.location.href,//页面地址
+        });
+        gdp('track', 'FT_flowClick', {
+            utmSource_var:getQueryString('utm_source')?getQueryString('utm_source'):'-',//广告来源
+            pageName_var: _module,//页面名称
+            pageUrl_var: window.location.href,//页面地址
+            moduleName_var: _module+'悬浮条',//模块名称
+            positionNumber_var: '3',//坑位
+            pitName_var: '在线客服',//流量位名称
+            frame_var:'-',
+            bannerNum_var:'-'
+        });
+        // ysf_open()
+        window.open('/help/qiyukf.html')
+    }
+    function goStore(){
+        gdp('track', 'FT_flowClick', {
+            utmSource_var:getQueryString('utm_source')?getQueryString('utm_source'):'-',//广告来源
+            pageName_var: _module,//页面名称
+            pageUrl_var: window.location.href,//页面地址
+            moduleName_var: _module+'悬浮条',//模块名称
+            positionNumber_var: '4',//坑位
+            pitName_var: '附近门店',//流量位名称
+            frame_var:'-',
+            bannerNum_var:'-'
+        });
+        window.open('/service/city/queryCity.html')
+    }
+    $('.common_sideBar_top').hover(function(){
+      $('.common_sideBar_bottom').css("opacity","0.7")
+    },function(){
+        $('.common_sideBar_bottom').css("opacity","1")
+    })
+</script></body>
+
+</html>

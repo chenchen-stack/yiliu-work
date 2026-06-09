@@ -1,0 +1,23 @@
+fastapi==0.115.6
+uvicorn[standard]==0.32.1
+sqlalchemy==2.0.36
+pydantic==2.10.3
+pydantic-settings==2.6.1
+python-multipart==0.0.19
+pandas==2.2.3
+openpyxl==3.1.5
+pyyaml==6.0.2
+httpx==0.28.1
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+bcrypt==4.2.1
+reportlab==4.2.5
+aiofiles==24.1.0
+langchain-core>=1.2.10,<2.0
+langchain-openai>=1.0,<2.0
+langgraph>=1.1.1,<1.2
+langgraph-prebuilt>=1.0.13
+langgraph-checkpoint-sqlite>=2.0.0
+aiosqlite>=0.20.0
+litellm>=1.55.0
+# chromadb 可选，未安装时 RAG 回退 case_assets 表

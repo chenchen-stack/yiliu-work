@@ -1,0 +1,9 @@
+source_system,source_field,target_field,transform,notes
+sap,KUNNR,customer_id,,SAP客户编号
+sap,DMBTR,amount,cents_to_yuan,金额分转元
+sap,BELNR,doc_no,prefix_SAP-,发票/凭证号
+sap,BUDAT,date,yyyymmdd_to_iso,过账日期
+dms,客户编码,customer_id,,DMS客户编码
+dms,收入金额,amount,,收入金额元
+dms,发票号码,doc_no,,发票号
+dms,记账日期,date,,记账日期

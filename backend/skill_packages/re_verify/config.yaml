@@ -1,0 +1,3 @@
+max_retry_rounds: 3
+auto_close_task_when_zero_diff: false
+use_corrected_folder: true

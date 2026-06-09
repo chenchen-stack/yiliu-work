@@ -1,0 +1,42 @@
+id: skill-anomaly-explain
+code: anomaly_explain
+name: 异常解释 Skill
+description: 对每条差异调用大模型进行根因分析，输出处理建议与证据链
+type: knowledge
+version: 1
+status: published
+category: 收入核对
+
+creator: system
+created_at: "2026-06-01"
+
+input:
+  difference_item:
+    type: object
+    properties:
+      id: { type: string }
+      type: { type: string }
+      business_key: { type: string }
+      business_amount: { type: number }
+      finance_amount: { type: number }
+      amount_diff: { type: number }
+      description: { type: string }
+
+output:
+  root_cause: { type: string, description: "根因分析" }
+  suggested_action: { type: string, description: "建议操作" }
+  confidence: { type: number }
+  evidence_chain: { type: array, description: "证据链条" }
+
+config:
+  model:
+    type: string
+    default: deepseek-v4-pro
+    description: 使用的大模型
+
+dependencies:
+  数据源: []
+  模型: deepseek-v4-pro
+  工具: [ai_analyzer]
+  知识库: [方太历史对账案例库]
+  权限要求: { 数据访问: 对账场景只读权限, 敏感操作: 无 }

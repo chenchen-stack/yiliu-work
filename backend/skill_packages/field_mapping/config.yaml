@@ -1,0 +1,23 @@
+mapping_mode: exact_first
+fuzzy_threshold: 0.85
+missing_field_action: warn
+mapping_rules:
+  sap_to_unified:
+    KUNNR: customer_id
+    NAME1: customer_name
+    DMBTR: amount
+    BELNR: doc_no
+    BUDAT: date
+    VKORG: sales_org
+  dms_to_unified:
+    客户编码: customer_id
+    客户名称: customer_name
+    收入金额: amount
+    发票号码: doc_no
+    记账日期: date
+    办事处: office_name
+  fanruan_to_unified:
+    客户编码: customer_id
+    应收金额: amount
+    发票号: doc_no
+    记账日期: date

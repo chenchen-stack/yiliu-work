@@ -1,0 +1,19 @@
+{
+  "datasets": [
+    {
+      "id": "dataset_fangtai_real",
+      "name": "方太收入核对 POC 真实数据",
+      "description": "方太客户提供：SAP结算行明细 × DMS收入台账明细，含帆软对账平台差异汇总",
+      "files": {
+        "business": "dataset_fangtai_real/SAP结算行明细.csv",
+        "finance": "dataset_fangtai_real/DMS收入台账明细.csv",
+        "statement": "dataset_fangtai_real/帆软对账平台.csv",
+        "payment": "dataset_fangtai_real/DMS订单明细.csv",
+        "sap_settlement": "dataset_fangtai_real/SAP结算单明细.csv"
+      },
+      "expected": {
+        "note": "真实 POC 数据，差异以帆软对账平台「差异标识=有差异」为准"
+      }
+    }
+  ]
+}

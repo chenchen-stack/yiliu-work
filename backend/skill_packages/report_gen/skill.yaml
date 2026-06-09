@@ -1,0 +1,31 @@
+id: skill-report_gen
+code: report_gen
+name: 报告生成 Skill
+description: 生成 PDF 对账报告并归档，含差异汇总与复核记录
+type: process
+version: 1
+status: published
+category: 收入核对
+
+creator: system
+created_at: "2026-06-01"
+
+input:
+  task_id: { type: string }
+  format: { type: string, default: pdf }
+  include_fields: { type: array, items: { type: string } }
+
+output:
+  report_id: { type: string }
+  file_path: { type: string }
+  download_url: { type: string }
+  page_count: { type: integer }
+
+config: {}
+
+dependencies:
+  数据源: [tasks, differences, review_actions]
+  模型: 无需大模型
+  工具: [report_generator]
+  知识库: []
+  权限要求: { 数据访问: 任务只读, 敏感操作: 生成报告 }

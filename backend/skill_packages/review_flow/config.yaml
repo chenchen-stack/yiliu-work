@@ -1,0 +1,4 @@
+timeout_hours: 48
+auto_confirm_low_confidence: false
+default_sort: severity_desc
+allow_assign: true

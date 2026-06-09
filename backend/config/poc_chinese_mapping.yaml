@@ -1,0 +1,104 @@
+# 方太 POC 真实 Excel 导出 CSV 的中文字段对照（列名与 Sheet 导出一致）
+
+# 多 Sheet Excel 自动分配：profile → Workflow 数据槽位
+# slot: business / finance / statement / payment / sap_settlement
+# priority: 同 slot 多个 Sheet 时优先使用行数最多的
+profile_roles:
+  sap_revenue_total:   { slot: business, priority: 10 }
+  sap_billing_detail:  { slot: sap_settlement, priority: 10 }
+  sap_settlement_detail: { slot: sap_settlement, priority: 5 }
+  dms_revenue_ledger:  { slot: finance, priority: 10 }
+  dms_settlement:      { slot: finance, priority: 5 }
+  dms_payment_detail:  { slot: payment, priority: 10 }
+  fanruan_platform:    { slot: statement, priority: 10 }
+
+profiles:
+  sap_revenue_total:
+    signatures: ["开票凭证", "本位币金额", "DRP客户ID", "凭证编号"]
+    object_type: SAP收入凭证
+    match_keys: ["customer_id", "mdm_code"]
+    match_key_mode: relation
+    aggregate_by: ["customer_id", "mdm_code"]
+    amount_field: sales_amount
+    fields:
+      - { unified_field: customer_id, business_column: 客户 }
+      - { unified_field: invoice_num, business_column: 开票凭证 }
+      - { unified_field: sales_amount, business_column: 本位币金额 }
+      - { unified_field: source_doc_no, business_column: 凭证编号 }
+      - { unified_field: mdm_code, business_column: DRP客户ID }
+
+  sap_billing_detail:
+    signatures: ["DMS结算订单", "开票凭证", "SD 凭证"]
+    object_type: SAP发货开票
+    match_keys: ["order_id"]
+    match_key_mode: order
+    aggregate_by: ["order_id"]
+    amount_field: sales_amount
+    fields:
+      - { unified_field: order_id, business_column: DMS结算订单 }
+      - { unified_field: sales_amount, business_column: DRP订单金额 }
+      - { unified_field: invoice_num, business_column: 开票凭证 }
+      - { unified_field: source_doc_no, business_column: SD 凭证 }
+      - { unified_field: business_date, business_column: 处理日期 }
+
+  dms_settlement:
+    signatures: ["结算单编号", "含税开票总金额", "法人客户编码", "MDM编码"]
+    object_type: DMS结算单
+    match_keys: ["customer_id", "mdm_code"]
+    match_key_mode: relation
+    aggregate_by: ["customer_id", "mdm_code"]
+    amount_field: sales_amount
+    fields:
+      - { unified_field: customer_id, business_column: 法人客户编码 }
+      - { unified_field: mdm_code, business_column: MDM编码 }
+      - { unified_field: order_id, business_column: 结算单编号 }
+      - { unified_field: sales_amount, business_column: 含税开票总金额 }
+
+  fanruan_platform:
+    signatures: ["SAP收入确认金额", "DMS收入确认金额", "差异标识", "单据号"]
+    object_type: 帆软对账平台
+    match_keys: ["doc_no", "mdm_code"]
+    match_key_mode: relation
+    amount_field: sales_amount
+    fields:
+      - { unified_field: order_id, business_column: 单据号 }
+      - { unified_field: customer_id, business_column: 客户NO }
+      - { unified_field: mdm_code, business_column: MDMID }
+      - { unified_field: sales_amount, business_column: SAP收入确认金额 }
+
+  sap_settlement_detail:
+    signatures: ["DMS结算订单", "DMS开票状态", "SAP发票状态"]
+    object_type: SAP结算单
+    match_keys: ["order_id"]
+    match_key_mode: order
+    amount_field: sales_amount
+    fields:
+      - { unified_field: order_id, business_column: DMS结算订单 }
+      - { unified_field: customer_id, business_column: 客户 }
+      - { unified_field: mdm_code, business_column: DRP客户编码 }
+
+  dms_payment_detail:
+    signatures: ["台账收入含税金额", "结算状态", "订单编码", "MDM编码"]
+    object_type: DMS订单回款
+    match_keys: ["order_id"]
+    match_key_mode: order
+    aggregate_by: ["order_id"]
+    amount_field: sales_amount
+    fields:
+      - { unified_field: order_id, business_column: 结算单编码 }
+      - { unified_field: mdm_code, business_column: MDM编码 }
+      - { unified_field: sales_amount, business_column: 台账收入含税金额 }
+      - { unified_field: settlement_status, business_column: 结算状态 }
+
+  dms_revenue_ledger:
+    signatures: ["结算单编码", "收入含税金额", "MDMID", "客户编码"]
+    object_type: DMS收入台账
+    match_keys: ["order_id"]
+    match_key_mode: order
+    aggregate_by: ["order_id"]
+    amount_field: sales_amount
+    fields:
+      - { unified_field: customer_id, business_column: 客户编码 }
+      - { unified_field: mdm_code, business_column: MDMID }
+      - { unified_field: order_id, business_column: 结算单编码 }
+      - { unified_field: sales_amount, business_column: 收入含税金额 }

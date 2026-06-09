@@ -1,0 +1,4 @@
+template: fangtai_revenue_default
+auto_archive_after_gen: true
+include_ai_attribution: true
+include_review_log: true

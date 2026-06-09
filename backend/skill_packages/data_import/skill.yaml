@@ -1,0 +1,36 @@
+id: skill-data-import
+code: data_import
+name: 数据导入 Skill
+description: 读取任务绑定的业务侧/财务侧数据文件，自动识别多Sheet结构，按POC配置解析为标准记录列表
+type: ability
+version: 1
+status: published
+category: 收入核对
+
+creator: system
+created_at: "2026-06-01"
+
+input:
+  file_paths:
+    type: object
+    properties:
+      business: { type: string, description: "业务侧文件路径" }
+      finance: { type: string, description: "财务侧文件路径" }
+      combined: { type: string, description: "综合数据文件路径(多Sheet)" }
+      statement: { type: string, description: "帆软对账单路径" }
+
+output:
+  business_rows: { type: integer, description: "业务侧记录数" }
+  finance_rows: { type: integer, description: "财务侧记录数" }
+  statement_rows: { type: integer, description: "对账单记录数" }
+  business_profile: { type: string, description: "业务侧数据配置标识" }
+  finance_profile: { type: string, description: "财务侧数据配置标识" }
+
+config: {}
+
+dependencies:
+  数据源: [Excel文件(只读)]
+  模型: 无需大模型
+  工具: [pandas, openpyxl, mapping_engine]
+  知识库: []
+  权限要求: { 数据访问: 文件读取权限, 敏感操作: 无 }

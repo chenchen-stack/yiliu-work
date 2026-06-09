@@ -1,0 +1,8 @@
+model: deepseek-chat
+top_k_rag: 5
+min_confidence_to_publish: 0.60
+max_tokens: 1024
+temperature: 0.1
+knowledge_base_ids:
+  - kb-fangtai-cases
+  - revenue_reconciliation

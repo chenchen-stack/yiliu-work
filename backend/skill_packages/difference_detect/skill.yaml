@@ -1,0 +1,31 @@
+id: skill-difference-detect
+code: difference_detect
+name: 差异识别 Skill
+description: 执行检测规则（金额差异、重复数据、映射异常），产出差异条目列表
+type: ability
+version: 1
+status: published
+category: 收入核对
+
+creator: system
+created_at: "2026-06-01"
+
+input:
+  business_records: { type: array, description: "业务侧标准化记录" }
+  finance_records: { type: array, description: "财务侧标准化记录" }
+  rules: { type: array, description: "检测规则配置列表" }
+
+output:
+  count: { type: integer, description: "差异总数" }
+  by_type: { type: object, description: "按类型分布" }
+  rules_applied: { type: integer, description: "启用规则数" }
+  rule_names: { type: array, description: "规则名称列表" }
+
+config: {}
+
+dependencies:
+  数据源: []
+  模型: 无需大模型(纯规则引擎)
+  工具: [difference_detector, mdm_service, fangtai_quality_inspector]
+  知识库: []
+  权限要求: { 数据访问: 无, 敏感操作: 无 }
