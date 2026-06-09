@@ -36,6 +36,7 @@ jobs:
         run: |
           npm ci
           npx vite build
+          cp dist/index.html dist/404.html
 
       - uses: actions/configure-pages@v5
 
