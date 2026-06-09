@@ -7,6 +7,14 @@
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      ;(function () {
+        var path = location.pathname.replace(/\/$/, '') || '/'
+        if (path.endsWith('/yiliu-work') && !location.pathname.includes('/login')) {
+          location.replace(path + '/login' + location.search + location.hash)
+        }
+      })()
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
