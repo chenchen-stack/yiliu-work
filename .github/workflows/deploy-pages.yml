@@ -35,7 +35,7 @@ jobs:
           GITHUB_PAGES: 'true'
         run: |
           npm ci
-          npm run build
+          npx vite build
 
       - uses: actions/configure-pages@v5
 
