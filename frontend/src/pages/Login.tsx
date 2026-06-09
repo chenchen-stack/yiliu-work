@@ -1,7 +1,16 @@
 import { useState } from 'react'
-import { Button, Card, Form, Input, Typography, message, Row, Col } from 'antd'
+import { Alert, Button, Card, Form, Input, Typography, message, Row, Col } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import { login } from '../api/client'
+
+const isGitHubPagesDemo = import.meta.env.BASE_URL !== '/'
+
+function isBackendUnavailable(error: unknown) {
+  const err = error as { response?: { status?: number }; code?: string; message?: string }
+  if (!err.response) return true
+  const status = err.response.status
+  return status === 404 || status === 502 || status === 503
+}
 
 export default function Login() {
   const [loading, setLoading] = useState(false)
@@ -13,8 +22,12 @@ export default function Login() {
       await login(values.username, values.password)
       message.success('登录成功')
       navigate('/')
-    } catch {
-      message.error('用户名或密码错误')
+    } catch (error) {
+      if (isBackendUnavailable(error)) {
+        message.error('无法连接后端服务，请先在本地启动 backend')
+      } else {
+        message.error('用户名或密码错误')
+      }
     } finally {
       setLoading(false)
     }
@@ -30,6 +43,15 @@ export default function Login() {
         <Col xs={22} sm={16} md={10} lg={8}>
           <Card>
             <Typography.Title level={4} style={{ textAlign: 'center', color: '#ea580c' }}>登录</Typography.Title>
+            {isGitHubPagesDemo && (
+              <Alert
+                type="warning"
+                showIcon
+                style={{ marginBottom: 16 }}
+                message="GitHub Pages 仅托管前端页面"
+                description="登录与业务数据需要 FastAPI 后端。请在本机运行 start-all.bat 或 start-backend.bat，然后访问 http://localhost:5175 使用完整功能。"
+              />
+            )}
             <Typography.Paragraph type="secondary" style={{ textAlign: 'center', fontSize: 13 }}>
               演示：lili / finance123 · admin / admin123
             </Typography.Paragraph>
